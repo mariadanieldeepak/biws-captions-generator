@@ -5,7 +5,7 @@ include 'include/youtube-captions-uploader-autoload.php';
 
 $client = new Google_Client();
 $client->setAuthConfig( 'include/client_secret.json' );
-$client->addScope( 'https://www.googleapis.com/auth/youtube' );
+$client->addScope( array( 'https://www.googleapis.com/auth/youtube.force-ssl', 'https://www.googleapis.com/auth/youtubepartner' ) );
 $client->setRedirectUri( 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php' );
 $client->setAccessType( 'offline' );      // offline access
 $client->setIncludeGrantedScopes( true ); // incremental auth

@@ -4,3 +4,6 @@ vendor/
 
 # PHPStorm files
 .idea/
+
+# Project specific folders
+include/resource/
