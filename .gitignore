@@ -7,3 +7,4 @@ vendor/
 
 # Project specific folders
 include/resource/
+include/client_secret.json
