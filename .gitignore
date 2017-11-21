@@ -1,0 +1,6 @@
+# Composer files & Directories
+composer.lock
+vendor/
+
+# PHPStorm files
+.idea/
