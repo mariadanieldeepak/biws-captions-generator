@@ -1,5 +1,4 @@
 <?php
-ini_set( 'display_errors', '1' );
 
 include 'vendor/autoload.php';
 include 'include/youtube-captions-uploader-autoload.php';
@@ -11,11 +10,12 @@ $client->setRedirectUri( 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.ph
 $client->setAccessType( 'offline' );      // offline access
 $client->setIncludeGrantedScopes( true ); // incremental auth
 
-if ( isset( $_SESSION['access_token'] ) && $_SESSION['access_token'] ) {
-	$client->setAccessToken( $_SESSION['access_token'] );
-	// TODO: Upload files here.
-	echo 'Connected to YouTube API v3.';
+if ( ! isset( $_GET['code'] ) ) {
+	$auth_url = $client->createAuthUrl();
+	header( 'Location: ' . filter_var( $auth_url, FILTER_SANITIZE_URL ) );
 } else {
-	$redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php';
+	$client->fetchAccessTokenWithAuthCode( $_GET['code'] );
+	$_SESSION['access_token'] = $client->getAccessToken();
+	$redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/';
 	header( 'Location: ' . filter_var( $redirect_uri, FILTER_SANITIZE_URL ) );
 }
